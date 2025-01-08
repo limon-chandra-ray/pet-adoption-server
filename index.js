@@ -52,7 +52,7 @@ async function run() {
  
 
 // Get all campaigns
-app.get('api/donation', async (req, res) => {
+app.get('/api/donation', async (req, res) => {
   try {
     const campaigns = await donation.find({}).toArray();
     res.json({ campaigns });
@@ -62,7 +62,7 @@ app.get('api/donation', async (req, res) => {
 });
 
 // Create a new campaign
-app.post('api/donation', async (req, res) => {
+app.post('/api/donation', async (req, res) => {
   try {
     const campaign = req.body;
     const result = await donation.insertOne(campaign);
@@ -73,7 +73,7 @@ app.post('api/donation', async (req, res) => {
 });
 
 // Update a campaign by ID
-app.put('api/donation/:id', async (req, res) => {
+app.put('/api/donation/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updatedCampaign = req.body;
@@ -88,7 +88,7 @@ app.put('api/donation/:id', async (req, res) => {
 });
 
 // Delete a campaign by ID
-app.delete('api/donation/:id', async (req, res) => {
+app.delete('/api/donation/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const result = await donation.deleteOne({ _id: new ObjectId(id) });
@@ -102,7 +102,7 @@ app.delete('api/donation/:id', async (req, res) => {
 
 
 // Get single campaign by ID
-app.get("api/donation/:id", async (req, res) => {
+app.get("/api/donation/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const query = { _id: new ObjectId(id) };
@@ -117,7 +117,7 @@ app.get("api/donation/:id", async (req, res) => {
 });
 
 // Create Stripe payment session
-app.post('api/create-payment-session', async (req, res) => {
+app.post('/api/create-payment-session', async (req, res) => {
   try {
     const { amount, campaignId } = req.body;
     const numericAmount = parseFloat(amount);
@@ -170,7 +170,7 @@ app.post('api/create-payment-session', async (req, res) => {
 });
 
 // Verify payment
-app.post('api/verify-payment', async (req, res) => {
+app.post('/api/verify-payment', async (req, res) => {
   const { sessionId, campaignId, amount } = req.body;
   
   try {
@@ -198,7 +198,7 @@ app.post('api/verify-payment', async (req, res) => {
 });
 
 // Update donation after successful payment
-app.post('api/update-donation', async (req, res) => {
+app.post('/api/update-donation', async (req, res) => {
   try {
     const { campaignId, amount, sessionId } = req.body;
     const numericAmount = parseFloat(amount);
@@ -250,7 +250,7 @@ app.post('api/update-donation', async (req, res) => {
 
 //get payment
 
-app.get('api/paymentList',async(req,res)=>{
+app.get('/api/paymentList',async(req,res)=>{
 
   const result=await stripeCollection.find().toArray();
   res.send(result);
@@ -261,7 +261,7 @@ app.get('api/paymentList',async(req,res)=>{
 
 
 //signup role of users
-app.post('api/users', async(req,res)=>{
+app.post('/api/users', async(req,res)=>{
   const users= req.body;
   console.log(users)
 
@@ -271,7 +271,7 @@ app.post('api/users', async(req,res)=>{
 })
 
 
-app.get('api/users',async(req,res)=>{
+app.get('/api/users',async(req,res)=>{
 
   const result=await usersCollection.find().toArray();
   res.send(result);
@@ -281,7 +281,7 @@ app.get('api/users',async(req,res)=>{
 
 
 //insert donation campign field 
-app.post('api/donation-campaign', async(req,res)=>{
+app.post('/api/donation-campaign', async(req,res)=>{
   const newcart = req.body;
 
  const result = await donateCollection.insertOne(newcart);
@@ -289,7 +289,7 @@ app.post('api/donation-campaign', async(req,res)=>{
  res.send(result);
 })
 
-app.get("api/donation-campaign", async (req, res) => {
+app.get("/api/donation-campaign", async (req, res) => {
 const cursor = donateCollection.find();
 const result = await cursor.toArray();
 res.send(result);
@@ -299,7 +299,7 @@ res.send(result);
 
 
  ////insert a pet post 
- app.post('api/adopt', async(req,res)=>{
+ app.post('/api/adopt', async(req,res)=>{
   const newcart = req.body;
  console.log(newcart)
  const result = await adoptCollection.insertOne(newcart);
@@ -307,14 +307,14 @@ res.send(result);
  res.send(result);
 })
 
-app.get("api/adopt", async (req, res) => {
+app.get("/api/adopt", async (req, res) => {
 const cursor = adoptCollection.find();
 const result = await cursor.toArray();
 res.send(result);
 }); 
 
 //add pet 
-app.post('api/add-pet',async(req,res)=>{
+app.post('/api/add-pet',async(req,res)=>{
 
     const data=req.body;
   
@@ -327,7 +327,7 @@ app.post('api/add-pet',async(req,res)=>{
 
 ///shop
 // GET all products
-app.get('api/shop', async (req, res) => {
+app.get('/api/shop', async (req, res) => {
   try {
     const products = await shop.find().toArray();
     res.json(products);
@@ -337,7 +337,7 @@ app.get('api/shop', async (req, res) => {
 });
 
 // POST a new product
-app.post('api/shop', async (req, res) => {
+app.post('/api/shop', async (req, res) => {
   try {
     const { name, forAnimal, image, quantity, description } = req.body;
     const result = await shop.insertOne({ name, forAnimal, image, quantity, description });
@@ -354,7 +354,7 @@ app.post('api/shop', async (req, res) => {
 
 
 // PUT update a product
-app.put('api/shop/:id', async (req, res) => {
+app.put('/api/shop/:id', async (req, res) => {
   const { id } = req.params;
   const { name, forAnimal, image, quantity, description } = req.body;
 
@@ -373,7 +373,7 @@ app.put('api/shop/:id', async (req, res) => {
 });
 
 // DELETE a product
-app.delete('api/shop/:id', async (req, res) => {
+app.delete('/api/shop/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const result = await shop.deleteOne({ _id: new ObjectId(id) });
@@ -391,7 +391,7 @@ app.delete('api/shop/:id', async (req, res) => {
 
 
 
-  app.post('api/order', async(req, res) => {
+  app.post('/api/order', async(req, res) => {
     try {
         const orderData = req.body;
         console.log('Received order data:', orderData);
@@ -445,7 +445,7 @@ app.delete('api/shop/:id', async (req, res) => {
 
   
 
-app.get("api/order", async (req, res) => {
+app.get("/api/order", async (req, res) => {
   const cursor = orderCollection.find();
   const result = await cursor.toArray();
   res.send(result);
@@ -456,7 +456,7 @@ app.get("api/order", async (req, res) => {
 
 
 
-app.get("api/add-pet", async (req, res) => {
+app.get("/api/add-pet", async (req, res) => {
   const cursor = addCollection.find();
   const result = await cursor.toArray();
   res.send(result);
@@ -464,7 +464,7 @@ app.get("api/add-pet", async (req, res) => {
 
  
 
-    app.get("api/add-pet/:id", async (req, res) => {
+    app.get("/api/add-pet/:id", async (req, res) => {
       const id=req.params.id;
      const query={
       _id : new ObjectId(id)
@@ -476,7 +476,7 @@ app.get("api/add-pet", async (req, res) => {
 
  ///MOREdetail a book
 
- app.get("api/moredetail/:id", async (req, res) => {
+ app.get("/api/moredetail/:id", async (req, res) => {
   const id=req.params.id;
  const query={
   _id : new ObjectId(id)
@@ -486,7 +486,7 @@ app.get("api/add-pet", async (req, res) => {
 });
 
 //part2 stripe
-app.get("api/moredetail2/:id", async (req, res) => {
+app.get("/api/moredetail2/:id", async (req, res) => {
   const id=req.params.id;
  const query={
   _id : new ObjectId(id)
@@ -497,7 +497,7 @@ app.get("api/moredetail2/:id", async (req, res) => {
 
 //post it donation detail
 
-app.post('api/donation-detail', async(req,res)=>{
+app.post('/api/donation-detail', async(req,res)=>{
   const newcart = req.body;
  console.log(newcart)
  const result = await stipeCollection.insertOne(newcart);
@@ -505,7 +505,7 @@ app.post('api/donation-detail', async(req,res)=>{
  res.send(result);
 })
 
-app.get("api/donation-detail", async (req, res) => {
+app.get("/api/donation-detail", async (req, res) => {
 const cursor = stipeCollection.find();
 const result = await cursor.toArray();
 res.send(result);
@@ -513,7 +513,7 @@ res.send(result);
 
 
 // Get all pets
-app.get('api/pet-listing', async (req, res) => {
+app.get('/api/pet-listing', async (req, res) => {
   try {
     const pets = await petCollection.find({}).toArray();
     res.status(200).send(pets);
@@ -523,7 +523,7 @@ app.get('api/pet-listing', async (req, res) => {
 });
 
 // Add a new pet
-app.post('api/pet-listing', async (req, res) => {
+app.post('/api/pet-listing', async (req, res) => {
   try {
     const newPet = req.body;
     const result = await petCollection.insertOne(newPet);
@@ -534,7 +534,7 @@ app.post('api/pet-listing', async (req, res) => {
 });
 
 // edit  a pet
-app.put('api/pet-listing/:id', async (req, res) => {
+app.put('/api/pet-listing/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updatedPet = req.body;
@@ -562,7 +562,7 @@ app.put('api/pet-listing/:id', async (req, res) => {
 
 
 // Delete a pet
-app.delete('api/pet-listing/:id', async (req, res) => {
+app.delete('/api/pet-listing/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const filter = { _id: new ObjectId(id) };
@@ -581,7 +581,7 @@ app.delete('api/pet-listing/:id', async (req, res) => {
 
 
 ////query
-app.get('api/pet-category',async(req,res)=>{
+app.get('/api/pet-category',async(req,res)=>{
 
  let query={};
  if(req.query?.category){
@@ -595,7 +595,7 @@ app.get('api/pet-category',async(req,res)=>{
 
 
  ///update add-pet 
- app.patch("api/update-pet/:id", async(req,res)=>{
+ app.patch("/api/update-pet/:id", async(req,res)=>{
 
   const id=req.params.id;
 const updateBooksData=req.body;
@@ -615,7 +615,7 @@ const result=await addCollection.updateOne(filter,updateDoc,options);
 
  ///refund a donation
 
- app.delete("api/donation-detail/:id", async(req,res)=>{
+ app.delete("/api/donation-detail/:id", async(req,res)=>{
 
   const id=req.params.id;
 
@@ -627,7 +627,7 @@ res.send(result);
 })
 
 //pet delete
-app.delete("api/pet-listing/:id", async(req,res)=>{
+app.delete("/api/pet-listing/:id", async(req,res)=>{
 
   const id=req.params.id;
 
@@ -640,7 +640,7 @@ res.send(result);
 
 ///adopt remove
 
-app.delete("api/pet-listing/:id", async(req,res)=>{
+app.delete("/api/pet-listing/:id", async(req,res)=>{
 
   const id=req.params.id;
 
@@ -653,7 +653,7 @@ res.send(result);
 
 
 //delete adopted pet
-app.delete("api/add-pet/:id", async(req,res)=>{
+app.delete("/api/add-pet/:id", async(req,res)=>{
 
   const id=req.params.id;
 
@@ -668,7 +668,7 @@ res.send(result);
 ///adope /remove request
 
 
-app.delete("api/adoption/:id", async(req,res)=>{
+app.delete("/api/adoption/:id", async(req,res)=>{
 
   const id=req.params.id;
 
@@ -686,7 +686,7 @@ res.send(result);
 
 //delete a users
 
-app.delete("api/users/:id", async(req,res)=>{
+app.delete("/api/users/:id", async(req,res)=>{
 
   const id=req.params.id;
 
